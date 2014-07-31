@@ -13,6 +13,7 @@ module RailsAdmin
 
         include RailsAdmin::Config::HasFields
         include RailsAdmin::Config::HasGroups
+        include RailsAdmin::Config::HasDescription
 
         attr_reader :abstract_model
         attr_reader :parent, :root
@@ -26,7 +27,7 @@ module RailsAdmin
 
         def inspect
           "#<#{self.class.name} #{
-            instance_variables.map do |v|
+            instance_variables.collect do |v|
               value = instance_variable_get(v)
               if [:@parent, :@root, :@abstract_model].include? v
                 if value.respond_to? :name
@@ -37,7 +38,7 @@ module RailsAdmin
               else
                 "#{v}=#{value.inspect}"
               end
-            end.join(", ")
+            end.join(', ')
           }>"
         end
       end
